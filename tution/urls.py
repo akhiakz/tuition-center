@@ -24,12 +24,22 @@ from base_app import views
 
 
 urlpatterns = [
+    re_path('admin/', admin.site.urls),
     re_path(r'^$', views.login, name='login'),
+    re_path(r'^Student_logout$', views.Student_logout, name='Student_logout'),
+    re_path(r'^Admin_logout$', views.Admin_logout, name='Admin_logout'),
     re_path(r'^Student_index$', views.Student_index, name='Student_index'),
     re_path(r'^Student_applyleave_cards/$', views.Student_applyleave_cards, name='Student_applyleave_cards'),
     re_path(r'^Student_leavereq/$', views.Student_leavereq, name='Student_leavereq'),
     re_path(r'^Student_reqedleave/$', views.Student_reqedleave, name='Student_reqedleave'),
     re_path(r'^Student_progressreport/$', views.Student_progressreport, name='Student_progressreport'),
+
+
+
+
+    re_path(r'^Admin_index$', views.Admin_index, name='Admin_index'),
+    re_path(r'^Admin_dashboard$', views.Admin_dashboard, name='Admin_dashboard'),
+
 
     ]
 

@@ -71,3 +71,10 @@ class leave(models.Model):
     
     # def _str_(self):
     #     return self.user
+
+class progressreport(models.Model):
+    user = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,null=True, blank=True)
+    designation = models.ForeignKey(designation, on_delete=models.DO_NOTHING,null=True, blank=True)                        
+    date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
+    subject = models.CharField(max_length=200)
+    mark = models.CharField(max_length=200)

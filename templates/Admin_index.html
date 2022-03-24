@@ -56,12 +56,13 @@
           <div class="profile-desc">
             <div class="profile-pic">
               <div class="count-indicator">
-                <img class="img-xs rounded-circle " src="{% static '/assets/images/faces/face5.jpg' %}" alt="">
+                {% for i in pro %}
+                <img class="img-xs rounded-circle " src="{{i.photo.url}}" alt="">
                 <span class="count bg-success"></span>
               </div>
               <div class="profile-name">
-                <h5 class="mb-0 font-weight-normal">Robert Jr</h5>
-                <span>Student</span>
+                <h5 class="mb-0 font-weight-normal">{{i.fullname}}</h5>
+                <span>Admin</span>
               </div>
             </div>
             <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -97,7 +98,7 @@
           <span class="nav-link">Navigation</span>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href='/app/'>
+          <a class="nav-link" href="{% url 'Admin_dashboard' %}">
             <span class="menu-icon">
               <i class="mdi mdi-apps"></i>
             </span>
@@ -105,19 +106,59 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'Student_progressreport' %}">
+          <a class="nav-link" href="#">
             <span class="menu-icon">
-              <i class="mdi mdi-cube-outline"></i>
+              <i class="mdi mdi-account-plus"></i>
             </span>
-            <span class="menu-title">Progress Report</span>
+            <span class="menu-title">Registration</span>
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'Student_applyleave_cards' %}">
+          <a class="nav-link" href="#">
             <span class="menu-icon">
-              <i class="mdi mdi-calendar-check"></i>
+              <i class="mdi mdi-playlist-play"></i>
             </span>
-            <span class="menu-title">Apply Leave</span>
+            <span class="menu-title">Staff</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="#">
+            <span class="menu-icon">
+              <i class="mdi mdi-playlist-play"></i>
+            </span>
+            <span class="menu-title">Student</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="#">
+            <span class="menu-icon">
+              <i class="mdi mdi-clipboard-text"></i>
+            </span>
+            <span class="menu-title">Acadamic</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="#">
+            <span class="menu-icon">
+              <i class="mdi mdi-chart-bar"></i>
+            </span>
+            <span class="menu-title">Attendance</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="#">
+            <span class="menu-icon">
+              <i class="mdi mdi-file-document-box"></i>
+            </span>
+            <span class="menu-title">Reported Issues</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" href="#">
+            <span class="menu-icon">
+              <i class="mdi mdi-message-plus"></i>
+            </span>
+            <span class="menu-title">Leave Request</span>
           </a>
         </li>
       </ul>
@@ -140,8 +181,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                 <div class="navbar-profile">
-                  <img class="img-xs rounded-circle" src="{% static '/assets/images/faces/face5.jpg' %}" alt="">
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Robert Jr</p>
+                  <img class="img-xs rounded-circle" src="{{i.photo.url}}" alt="">
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">{{i.fullname}}</p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>
@@ -150,7 +191,7 @@
                 <h6 class="p-3 mb-0">Profile</h6>
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item" href="{% url 'Student_logout' %}">
+                <a class="dropdown-item preview-item" href="{% url 'Admin_logout' %}">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-logout text-danger"></i>
@@ -173,6 +214,7 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          {% endfor %}
           {%block content%}
 
 

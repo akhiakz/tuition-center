@@ -14,6 +14,9 @@ import qrcode
 import os
 from django.urls import reverse
 from urllib.parse import urlencode
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.models import User
 
 def login(request):
     
@@ -29,7 +32,48 @@ def login(request):
                 variable = "dummy"
             pro = user_registration.objects.filter(id=stid)
             return render(request, 'Student_index.html', {'pro':pro})
+
+    des = designation.objects.get(designation='admin')
+    if request.method == 'POST':
+        if user_registration.objects.filter(email=request.POST['email'], password=request.POST['password'],designation=des.id).exists():
+            member=user_registration.objects.get(email=request.POST['email'], password=request.POST['password'])
+            request.session['adid'] = member.id
+           
+            if request.session.has_key('adid'):
+                adid = request.session['adid']
+            else:
+                variable = "dummy"
+            pro = user_registration.objects.filter(id=adid)
+            return render(request, 'Admin_dashboard.html', {'pro':pro})
     return render(request,'login.html')
+
+        # email = request.POST.get('email')
+        # password = request.POST.get('password')
+
+        # user = User.objects.get(email=email)
+        # if user is not None:
+        #     pwd_valid = check_password(password, user.password)
+        #     if pwd_valid:
+        #         request.session['Adm_id'] = user.id
+        #         return redirect('Admin_dashboard')
+        #     else:
+        #         msg_error = "Password is incorrect"
+        #         return render(request, 'login.html', {'msg_error': msg_error})
+
+
+def Student_logout(request):
+    if 'stid' in request.session:  
+        request.session.flush()
+        return redirect('/')
+    else:
+        return redirect('/')
+
+def Admin_logout(request):
+    if 'adid' in request.session:  
+        request.session.flush()
+        return redirect('/')
+    else:
+        return redirect('/')
 
 def Student_index(request):
     return render(request,'Student_index.html')
@@ -71,4 +115,33 @@ def Student_reqedleave(request):
         return redirect('/')
 
 def Student_progressreport(request):
-    return render(request,'Student_progressreport.html')
+    if 'stid' in request.session:
+        if request.session.has_key('stid'):
+            stid = request.session['stid']
+        else:
+            variable="dummy"
+        pro = user_registration.objects.filter(id=stid)
+        progress = progressreport.objects.filter(user_id=stid)
+    return render(request,'Student_progressreport.html',{'pro':pro, 'progressreport':progress})
+
+
+
+
+
+def Admin_index(request):
+    if 'adid' in request.session:
+        if request.session.has_key('adid'):
+            adid = request.session['adid']
+        else:
+            variable="dummy"
+        pro = user_registration.objects.filter(id=adid)
+    return render(request,'Admin_index.html',{'pro':pro})
+
+def Admin_dashboard(request):
+    if 'adid' in request.session:
+        if request.session.has_key('adid'):
+            adid = request.session['adid']
+        else:
+            variable="dummy"
+        pro = user_registration.objects.filter(id=adid)
+    return render(request,'Admin_dashboard.html',{'pro':pro})
