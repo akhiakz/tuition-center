@@ -78,3 +78,21 @@ class progressreport(models.Model):
     date = models.DateField(auto_now_add=False, auto_now=False,  null=True, blank=True)
     subject = models.CharField(max_length=200)
     mark = models.CharField(max_length=200)
+
+
+class reported_issue(models.Model):
+    reporter = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
+                                 related_name='reported_issuereporter', null=True, blank=True)
+    reported_to = models.ForeignKey(user_registration, on_delete=models.DO_NOTHING,
+                                    related_name='reported_issuereported_to', null=True, blank=True)
+    issue = models.TextField()
+    reported_date = models.DateField(
+        auto_now_add=False, auto_now=False,  null=True, blank=True)
+    reply = models.TextField()
+    status = models.CharField(max_length=200)
+    issuestatus = models.CharField(max_length=200)
+    designation_id = models.CharField(max_length=200)
+
+
+    def __str__(self):
+        return self.reporter

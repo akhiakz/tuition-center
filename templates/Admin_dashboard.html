@@ -19,7 +19,6 @@
 </style>
 
 <h3 style="padding-left: 7px">My Profile</h3>
- {% for i in pro %}
 <div class="row">
   <div class="col-md-4 grid-margin stretch-card">
     <div class="card">
@@ -35,7 +34,7 @@
           </div>
           <h3 class="card-title">PROFILE</h3>
         
-          <img src="{{i.photo.url}}" alt="image" style="border-radius: 50%; height:100px; width:100px;" />
+          <img src="{% static '/assets/images/faces/face5.jpg' %}" alt="image" style="border-radius: 50%; height:100px; width:100px;" />
          
           
         </center>
@@ -62,7 +61,7 @@
                   </div>
                   <div class="me-auto text-sm-right pt-2 pt-sm-0">
                     
-                    <h6 class="preview-subject">{{i.fullname}}</h6>
+                    <h6 class="preview-subject">Admin</h6>
                   </div>
                 </div>
               </div>
@@ -78,7 +77,7 @@
                   </div>
                   <div class="me-auto text-sm-right pt-2 pt-sm-0">
                    
-                    <h6 class="preview-subject">{{i.email}}</h6>
+                    <h6 class="preview-subject">Ak@gmail.com</h6>
                   </div>
                 </div>
               </div>
@@ -93,7 +92,7 @@
                   </div>
                   <div class="me-auto text-sm-right pt-2 pt-sm-0">
                    
-                    <h6 class="preview-subject">{{i.mobile}}</h6>
+                    <h6 class="preview-subject"></h6>
                   </div>
                 </div>
               </div>
@@ -119,5 +118,4 @@
 </div>
 
   
-{% endfor %}
   {% endblock %}

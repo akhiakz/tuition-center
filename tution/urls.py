@@ -18,7 +18,6 @@ from django.urls import re_path, include
 from django.views.static import serve
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
 from base_app import views
 
 
@@ -39,6 +38,22 @@ urlpatterns = [
 
     re_path(r'^Admin_index$', views.Admin_index, name='Admin_index'),
     re_path(r'^Admin_dashboard$', views.Admin_dashboard, name='Admin_dashboard'),
+    re_path(r'^logout$', views.logout, name='logout'),
+
+
+    re_path(r'^Man_index$', views.Man_index, name='Man_index'),
+    re_path(r'^MAN_Report$', views.MAN_Report, name='MAN_Report'),
+    # re_path(r'^MAN_Reportedissue$', views.MAN_Reportedissue, name='MAN_Reportedissue'),
+    re_path(r'^MAN_ReportedissueShow/(?P<id>\d+)$', views.MAN_ReportedissueShow, name='MAN_ReportedissueShow'),
+    re_path(r'^MAN_rep/(?P<id>\d+)/$', views.MAN_rep, name='MAN_rep'),
+    re_path(r'^MAN_ReportedissueShow1/(?P<id>\d+)/$',views.MAN_ReportedissueShow1, name='MAN_ReportedissueShow1'),
+    re_path(r'^MAN_manager_report$', views.MAN_manager_report, name='MAN_manager_report'),
+    re_path(r'^MAN_Reportissue$', views.MAN_Reportissue, name='MAN_Reportissue'),
+    re_path(r'^MAN_reportsuccess$', views.MAN_reportsuccess, name='MAN_reportsuccess'),
+    re_path(r'^MAN_manger_reportedissues$', views.MAN_manger_reportedissues, name='MAN_manger_reportedissues'),
+    re_path(r'^MAN_manger_reportedissues1/(?P<id>\d+)/$', views.MAN_manger_reportedissues1, name='MAN_manger_reportedissues1'),
+
+    re_path(r'^change_password$', views.change_password, name='change_password'),
 
 
     ]

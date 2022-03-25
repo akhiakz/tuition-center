@@ -14,9 +14,13 @@ import qrcode
 import os
 from django.urls import reverse
 from urllib.parse import urlencode
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
+
 
 def login(request):
     
@@ -33,18 +37,32 @@ def login(request):
             pro = user_registration.objects.filter(id=stid)
             return render(request, 'Student_index.html', {'pro':pro})
 
-    des = designation.objects.get(designation='admin')
+        des = designation.objects.get(designation='manager')
     if request.method == 'POST':
         if user_registration.objects.filter(email=request.POST['email'], password=request.POST['password'],designation=des.id).exists():
             member=user_registration.objects.get(email=request.POST['email'], password=request.POST['password'])
-            request.session['adid'] = member.id
+            request.session['mnid'] = member.id
            
-            if request.session.has_key('adid'):
-                adid = request.session['adid']
+            if request.session.has_key('mnid'):
+                mnid = request.session['mnid']
             else:
                 variable = "dummy"
-            pro = user_registration.objects.filter(id=adid)
-            return render(request, 'Admin_dashboard.html', {'pro':pro})
+            pro = user_registration.objects.filter(id=mnid)
+            return render(request, 'Man_index.html', {'pro':pro})
+
+
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = User.objects.get(email=email)
+        if user is not None:
+            pwd_valid = check_password(password, user.password)
+            if pwd_valid:
+                request.session['Adm_id'] = user.id
+                return redirect('Admin_dashboard')
+            else:
+                return render(request, 'login.html')
+
     return render(request,'login.html')
 
         # email = request.POST.get('email')
@@ -129,19 +147,114 @@ def Student_progressreport(request):
 
 
 def Admin_index(request):
-    if 'adid' in request.session:
-        if request.session.has_key('adid'):
-            adid = request.session['adid']
-        else:
-            variable="dummy"
-        pro = user_registration.objects.filter(id=adid)
-    return render(request,'Admin_index.html',{'pro':pro})
+    return render(request,'Admin_index.html')
 
 def Admin_dashboard(request):
-    if 'adid' in request.session:
-        if request.session.has_key('adid'):
-            adid = request.session['adid']
+    return render(request,'Admin_dashboard.html')
+
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
+
+
+
+def Man_index(request):
+    return render(request,'Man_index.html')
+
+def MAN_Report(request):
+    des = designation.objects.all()
+    # filter(~Q("admin"))
+    return render(request,'MAN_Report.html',{'des':des })
+
+# def MAN_Reportedissue(request):
+#     des = designation.objects.all()
+#     return render(request,'MAN_Reportedissue.html',{'des':des })
+
+def MAN_ReportedissueShow(request,id):
+        designations=designation.objects.get(id=id)
+        user=user_registration.objects.filter(designation_id=id)
+        reported_issues=reported_issue.objects.all()
+        return render(request,'MAN_ReportedissueShow.html',{'designation':designations,'reported_issue':reported_issues,'user_registration':user})
+
+def MAN_rep(request,id):
+    
+        if request.method == 'POST':
+            
+            vars = reported_issue.objects.get(id=id)
+            vars.reply=request.POST.get('reply')
+            vars.status='submitted'
+            vars.save()
+           
+            return redirect('MAN_Report')
+       
+
+def MAN_ReportedissueShow1(request,id):
+        reported_issues=reported_issue.objects.get(id=id)
+        return render(request,'MAN_ReportedissueShow1.html',{'reported_issue':reported_issues})
+
+
+def MAN_manager_report(request):
+    return render(request,'MAN_manager_report.html')
+
+def MAN_Reportissue(request):
+    return render(request,'MAN_Reportissue.html')
+
+def MAN_reportsuccess(request):
+    if 'mnid' in request.session:
+        if request.session.has_key('mnid'):
+            mnid = request.session['mnid']
         else:
             variable="dummy"
-        pro = user_registration.objects.filter(id=adid)
-    return render(request,'Admin_dashboard.html',{'pro':pro})
+        pro = user_registration.objects.filter(id=mnid)
+        design=designation.objects.get(designation="admin")
+        man = user_registration.objects.get(designation_id=design.id)
+        if request.method == 'POST':
+            
+            vars = reported_issue()
+            vars.issue=request.POST.get('MANreportissue')
+            vars.reported_date=datetime.now()
+            vars.reported_to_id=man.id
+            vars.reporter_id=mnid
+            vars.status='pending'
+            vars.save()
+        return render(request, 'MAN_Reportissue.html',{'pro':pro})
+    else:
+        return redirect('/')
+    
+
+def MAN_manger_reportedissues(request):
+    if 'mnid' in request.session:
+        if request.session.has_key('mnid'):
+            mnid = request.session['mnid']
+        else:
+            variable="dummy"
+        pro = user_registration.objects.filter(id=mnid)
+        var = reported_issue.objects.filter(reporter=mnid)
+    return render(request,'MAN_manger_reportedissues.html',{'var':var,'pro':pro})
+
+
+def MAN_manger_reportedissues1(request,id):
+        reported_issues=reported_issue.objects.get(id=id)
+        return render(request,'MAN_manger_reportedissues1.html',{'reported_issue':reported_issues})
+
+
+
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'Admin_changepassword.html')
+
+
+
+            

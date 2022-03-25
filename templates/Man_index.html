@@ -60,8 +60,8 @@
                 <span class="count bg-success"></span>
               </div>
               <div class="profile-name">
-                <h5 class="mb-0 font-weight-normal">AK</h5>
-                <span>Admin</span>
+                <h5 class="mb-0 font-weight-normal">Robert Jr</h5>
+                <span>manager</span>
               </div>
             </div>
             <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
@@ -78,7 +78,7 @@
                 </div>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="{% url 'change_password' %}" class="dropdown-item preview-item">
+              <a href="#" class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-onepassword  text-info"></i>
@@ -97,7 +97,7 @@
           <span class="nav-link">Navigation</span>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="{% url 'Admin_dashboard' %}">
+          <a class="nav-link" href='/app/'>
             <span class="menu-icon">
               <i class="mdi mdi-apps"></i>
             </span>
@@ -145,7 +145,7 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="{% url 'MAN_Report' %}">
             <span class="menu-icon">
               <i class="mdi mdi-file-document-box"></i>
             </span>
@@ -181,7 +181,7 @@
               <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                 <div class="navbar-profile">
                   <img class="img-xs rounded-circle" src="{% static '/assets/images/faces/face5.jpg' %}" alt="">
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Ak</p>
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">Robert Jr</p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>
@@ -190,7 +190,7 @@
                 <h6 class="p-3 mb-0">Profile</h6>
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item" href="{% url 'logout' %}">
+                <a class="dropdown-item preview-item" href="{% url 'Student_logout' %}">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-logout text-danger"></i>
