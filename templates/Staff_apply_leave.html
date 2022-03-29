@@ -1,4 +1,4 @@
-{% extends 'Student_index.html' %}
+{% extends 'Staff_index.html' %}
 {% load static %}
 {% block content %}
 
@@ -69,15 +69,14 @@
 </style>
 
 <body>
-  <div id="myprofile" style="font-size: 20px;font-weight: 600;opacity: 0.9;color: #6c7293;">APPLY LEAVE</div>
+  <div id="myprofile" style="font-size: 20px;font-weight: 600;opacity: 0.9;color: #6c7293;">APPLY LEAVE</div><br>
   <div class="container">
     <div id="firstbox" class="row shadow " style="background-color: #191c24;">
       <div class="col-md-12 ">
 
-        <form method="POST" action="{% url 'Student_leavereq' %}" enctype="multipart/form-data" id="myForm">
+        <form method="POST" action="{% url 'Staff_apply_leave' %}" enctype="multipart/form-data" id="myForm">
           
-          
-          
+
 
           {% csrf_token %}
           <div class="container mt-5 mb-5">

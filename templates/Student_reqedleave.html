@@ -103,11 +103,13 @@
                 <td>{{i.reason}}</td>
                 <td>
                   {% if i.status == "pending" %}
-                  <div class="badge badge-outline-warning">submitted</div>
-                  {% elif i.status == "approved" %}
-                  <div class="badge badge-outline-success">approved</div>
-                  {% elif i.status == "rejected" %}
-                  <div class="badge badge-outline-danger">rejected</div>
+                  <div class="badge badge-outline-warning">Submitted</div>
+                  {% elif i.status == "Approved" %}
+                  <div class="badge badge-outline-success">Approved</div>
+                  {% elif i.status == "Rejected" %}
+                  <a href="#">
+                    <div class="badge badge-outline-danger">Rejected</div>
+                  </a>                  
                   {% endif %}
                 </td>
                 <!-- <td>

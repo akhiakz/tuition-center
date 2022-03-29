@@ -1,0 +1,87 @@
+{% extends 'Staff_index.html' %}
+{% block content %}
+{% load static %}
+<style>
+    #a {
+        font-size: 100%;
+    }
+</style>
+
+<div class="row ">
+
+
+    <h4 class="card-title">Update Subject</h4>
+    <div class="col-md-8">
+
+        <div class="card p-3 mt-3">
+            <form method="post" action="{% url 'MAN_subjectupdate' sub.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                <label for="exampleTextarea1">Subject</label>
+                <div class="md-form mb-4 pink-textarea active-pink-textarea">
+                    <i class="fa fa-angle-double-right prefix"></i>
+                    <input id="text" name="subj" class="md-textarea form-control" rows="1"
+                        value="{{sub.subject}}">
+
+                </div>
+
+                <label for="exampleTextarea1">Rate</label>
+                <div class="md-form mb-4 pink-textarea active-pink-textarea">
+                    <i class="fa fa-angle-double-right prefix"></i>
+                    <input id="text" name="srate" class="md-textarea form-control" rows="1"
+                        value="{{sub.rate}}">
+
+                </div>
+
+                <div class="form-group">
+                    <label>Batch</label>
+                    <select class="form-control" style="color:white;" name="subbatch" id="emp">
+                        <option selected  value="{{sub.batch.id}}">{{sub.batch.batch}}</option>
+                        {% for i in batches %}
+                        <option value="{{i.id}}">{{i.batch}}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Logo</label>
+                    <input type="file" name="slogo" class="file-upload-default" data-show-upload="true"
+                        data-show-caption="true" style="color: white;" value="{{sub.logo}}">
+                    <div class="col-xs-12">
+                        <!-- <input type="file" class="form-control md-textarea file-upload-info" disabled
+                            placeholder="select a logo" value="{{sub.logo}}">
+                        <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button"
+                                style="height: 37px;">Upload</button>
+                        </span> -->
+                        <input type="file" name="slogo" class="form-contol">
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 mt-4">
+                        <button type="submit" class="btn btn-outline-primary w-100">Update</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}
